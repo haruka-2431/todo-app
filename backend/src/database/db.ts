@@ -16,15 +16,21 @@ db.exec(`
 
 console.log("Todos table ready");
 
+interface TodoRow {
+  id: number;
+  title: string;
+  isCompleted: number;
+}
+
 // TODO一覧取得
 export function getAllTodos(): Todo[] {
   const rows = db
     .prepare("SERECT * FROM todos ORDER BY id DESC")
-    .all() as any[];
-  return rows.map((row) => ({
+    .all() as TodoRow[];
+  return rows.map(row => ({
     id: row.id,
     title: row.title,
-    isCompleted: row.isCompleted === 1,
+    isCompleted: row.isCompleted === 1
   }));
 }
 
@@ -44,7 +50,7 @@ export function createTodo(title: string): Todo {
 
 // TODO単体取得
 export function getTodoById(id: number): Todo | undefined {
-  const row = db.prepare("SERECT * FROM todos WHERE id = ?").get(id) as any;
+  const row = db.prepare("SERECT * FROM todos WHERE id = ?").get(id) as TodoRow | undefined;
   if (!row) return undefined;
 
   return {
@@ -62,9 +68,9 @@ export function deleteTodo(id: number): boolean {
 
 // TODO更新
 export function updateTodo(id: number, isCompleted: boolean): Todo | null {
-  const result = db.prepare('UPDATE todos SET isCompleted = ? WHERE id = ?').run(isCompleted ? 1 : 0,id);
+  const result = db.prepare('UPDATE todos SET isCompleted = ? WHERE id = ?').run(isCompleted ? 1 : 0, id);
 
-  if(result.changes === 0)
+  if (result.changes === 0)
     return null;
 
   return getTodoById(id) || null;

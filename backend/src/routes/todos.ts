@@ -93,3 +93,5 @@ router.patch("/:id", (req: Request, res: Response) => {
     res.status(500).json({ error: "Unable to update todo" });
   }
 });
+
+export default router;
