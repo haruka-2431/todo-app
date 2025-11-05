@@ -25,7 +25,7 @@ interface TodoRow {
 // TODO一覧取得
 export function getAllTodos(): Todo[] {
   const rows = db
-    .prepare("SERECT * FROM todos ORDER BY id DESC")
+    .prepare("SELECT * FROM todos ORDER BY id DESC")
     .all() as TodoRow[];
   return rows.map(row => ({
     id: row.id,
