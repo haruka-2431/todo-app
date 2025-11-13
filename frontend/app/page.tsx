@@ -1,12 +1,14 @@
 "use client";
 
+import { useState } from "react";
+
 export default function Home() {
 
-  const todos = [
+  const [todos, setTodos] = useState ([
     { id:1, title: "買い物", isCompleted: false },
     { id:2, title: "掃除", isCompleted: false },
     { id:2, title: "勉強", isCompleted: true }
-  ];
+  ]);
 
   return (
     <div className="min-h-screen bg-base-200 py-8 px-4">
