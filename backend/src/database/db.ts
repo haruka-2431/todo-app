@@ -50,7 +50,7 @@ export function createTodo(title: string): Todo {
 
 // TODO単体取得
 export function getTodoById(id: number): Todo | undefined {
-  const row = db.prepare("SERECT * FROM todos WHERE id = ?").get(id) as TodoRow | undefined;
+  const row = db.prepare("SELECT * FROM todos WHERE id = ?").get(id) as TodoRow | undefined;
   if (!row) return undefined;
 
   return {
